@@ -7,19 +7,19 @@ pipeline {
     stages {
       stage('build') {
         steps {
-          git url: 'https://gitlab.com/luidasa/angular-app-jenkins.git', branch: 'master', credentialsId: 'gitlab-luidasa'
+          git url: 'https://github.com/danielq/Angular-jenkins.git', branch: 'master', credentialsId: 'gitlab-luidasa'
           sh '/usr/bin/ng build --prod'
         }
       }
       stage('build image') {
         steps {
-          sh 'docker build -t luidasa/angular-app-jenkins:${VERSION}.${BUILD_NUMBER} .'
+          sh 'docker build -t danielq/Angular-jenkins.git:${VERSION}.${BUILD_NUMBER} .'
         }
       }
       stage('push image to hub') {
         steps {
           withDockerRegistry([credentialsId: "dockerhub", url: ""]) {
-            sh 'docker push luidasa/angular-app-jenkins:${VERSION}.${BUILD_NUMBER}'
+            sh 'docker push danielq/Angular-jenkins.git:${VERSION}.${BUILD_NUMBER}'
           }
         }
       }
